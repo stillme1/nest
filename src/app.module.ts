@@ -6,6 +6,7 @@ import { AccountsModule } from './accounts/accounts.module';
 import { Accounts } from './accounts/accounts.model';
 import { SettingsModule } from './settings/settings.module';
 import { Settings } from './settings/settings.model';
+import { Auth } from './accounts/auth.model';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { Settings } from './settings/settings.model';
       username: 'root',
       password: null,
       database: 'mylocaldb',
-      models: [Accounts, Settings],
+      models: [Accounts, Settings, Auth],
     }),
     AccountsModule,
     SettingsModule,

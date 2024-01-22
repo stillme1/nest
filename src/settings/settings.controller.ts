@@ -7,11 +7,14 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { Settings } from './settings.model';
 import { SettingsService } from './settings.service';
+import { AuthGuard } from 'src/accounts/auth.guard';
 
 @Controller('settings')
+@UseGuards(AuthGuard)
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 

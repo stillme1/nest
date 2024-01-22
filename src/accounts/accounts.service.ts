@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Accounts } from './accounts.model';
+import { Transaction } from 'sequelize';
 
 @Injectable()
 export class AccountsService {
@@ -19,11 +20,16 @@ export class AccountsService {
     });
   }
 
-  async insertAccount(account: Accounts): Promise<Accounts> {
+  async insertAccount(
+    account: Accounts,
+    transaction: Transaction,
+  ): Promise<Accounts> {
     const existingAccount = await this.findOne(account.name);
     if (existingAccount) {
       return Promise.reject('DUPLICATE_ACCOUNT');
     }
-    return this.accountsRepository.create<Accounts>(account);
+    return this.accountsRepository.create<Accounts>(account, {
+      transaction: transaction,
+    });
   }
 }
