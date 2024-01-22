@@ -1,8 +1,7 @@
-import { Module } from '@nestjs/common';
-import { Column, ForeignKey, Model } from 'sequelize-typescript';
+import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { Accounts } from 'src/accounts/accounts.model';
 
-@Module({})
+@Table
 export class Settings extends Model<Accounts> {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
