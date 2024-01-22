@@ -1,4 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Accounts } from './accounts.model';
 import { AccountsService } from './accounts.service';
 
@@ -8,6 +14,16 @@ export class AccountsController {
 
   @Post()
   async createAccount(@Body() accountData: Accounts): Promise<Accounts> {
-    return await this.accountsService.insertAccount(accountData);
+    try {
+      return await this.accountsService.insertAccount(accountData);
+    } catch (err) {
+      if (err === 'DUPLICATE_ACCOUNT') {
+        throw new HttpException(
+          'Account with provided name already exists',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw err;
+    }
   }
 }
